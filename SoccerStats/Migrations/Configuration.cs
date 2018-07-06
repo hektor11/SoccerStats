@@ -30,21 +30,7 @@ namespace SoccerStats.Migrations
             //    );
             //
 
-            //Add a user to the db
-            context.Users.AddOrUpdate(
-                u => u.UserName,
-                new Models.ApplicationUser
-                {
-                    UserName = "hectuanerz@gmail.com",
-                    Email = "hectuanerz@gmail.com",
-                }
-                );
-
-            context.SaveChanges();
-            // Create a UserManager to add a password to the previously created user
-            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-            UserManager.AddPassword(context.Users.Where(u => u.UserName == "hectuanerz@gmail.com").FirstOrDefault().Id.ToString(), "123456");
-            context.SaveChanges();
+           
         }
     }
 }
