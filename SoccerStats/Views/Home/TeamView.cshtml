@@ -1,0 +1,76 @@
+﻿@model SoccerStats.Models.ViewModels.Team
+
+@{
+    ViewBag.Title = "TeamView";
+}
+
+
+<div ng-app="PlayerList" class="container">
+    <div class="row" ng-controller="PlayerDetails" ng-init="init('@Model._links.players.href')">
+        <div class="col-md-3">
+            <br />
+            <img id="crestId" style="width: 100px" src="@Model.crestUrl" />
+            <h3 style="position: center">@Model.name</h3>
+            <button class="btn-primary" ng-click="add('@Model._links.self.href')">Add Team</button>
+        </div>
+        <div class="col-md-9">
+            <div>
+                <div>
+
+                    <select class="selectpicker" data-style="btn-primary" ng-model="sortOrder">
+                        <option value="name">Name</option>
+                        <option value="jerseyNumber">Jersey Number</option>
+                        <option value="nationality">Nationality</option>
+                        <option value="position">Position</option>
+                    </select>
+
+
+                    <br />
+
+                    <table class="table">
+                        <tr>
+                            <th>Number</th>
+                            <th>Name</th>
+                            <th>Nationality</th>
+                            <th>Position</th>
+                        </tr>
+                        <tr>
+                        <tr ng-repeat="p in players | orderBy:sortOrder">
+                            <td>{{p.jerseyNumber}}</td>
+                            <td>{{p.name}}</td>
+                            <td>{{p.nationality}}</td>
+                            <td>{{p.position}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+@section Scripts
+{
+    <script data-require="angular.js@1.6.6" data-semver="1.6.6" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+    <script src="~/Scripts/Angular/PlayerDetailsController.js"></script>
+
+    <script>
+    $(document).ready(function () {
+
+            <text>$.get($('#crestId').prop('src'))
+            .done(function () {
+                // Keep src image if successful
+                }).fail(function () {
+                    // Image doesn't exist - do something else.
+                    alert("yo");
+                $('#crestId').prop('src', 'http://res.publicdomainfiles.com/pdf_view/1/13488048039980.png');
+            });</text>
+            position++;
+
+        
+    });
+    </script>
+}

@@ -16,6 +16,8 @@ namespace SoccerStats.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string teamUrl { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,5 +31,7 @@ namespace SoccerStats.Models
         {
             return new ApplicationDbContext();
         }
+
+        //public System.Data.Entity.DbSet<SoccerStats.Models.ApplicationUser> Admins { get; set; }
     }
 }
