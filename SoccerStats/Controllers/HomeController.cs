@@ -61,6 +61,7 @@ namespace SoccerStats.Controllers
                 request.RequestFormat = DataFormat.Json;
                 var response = client.Execute(request);
                 LeagueStanding model = JsonConvert.DeserializeObject<LeagueStanding>(response.Content);
+                model.competitionId = (int)id;
                 return View(model);
             }
 
@@ -69,8 +70,8 @@ namespace SoccerStats.Controllers
         /// <summary>
         /// This returns the model for a team (team crest, name, etc)
         /// </summary>
-
-        public ActionResult TeamView(string url)
+        [Authorize]
+        public ActionResult TeamView(string url, string id)
         {
             if (url == null)
             {
@@ -79,12 +80,12 @@ namespace SoccerStats.Controllers
 
             else
             {
-                List<Object> teamDetails = new List<Object>();
                 var teamClient = new RestClient(url);
                 var teamRequest = new RestRequest(Method.GET);
                 teamRequest.RequestFormat = DataFormat.Json;
                 var response = teamClient.Execute(teamRequest);
                 Team teamModel = JsonConvert.DeserializeObject<Team>(response.Content);
+                teamModel.competitionId = id;
                 return View(teamModel);
             }
 
@@ -95,7 +96,6 @@ namespace SoccerStats.Controllers
         /// </summary>
         public JsonResult GetPlayerData(string teamUrl)
         {
-            List<Object> teamDetails = new List<Object>();
             var client= new RestClient(teamUrl);
             var request = new RestRequest(Method.GET);
             request.RequestFormat = DataFormat.Json;
@@ -106,10 +106,25 @@ namespace SoccerStats.Controllers
         }
 
         /// <summary>
+        /// This is used by the Angular controller to request team specific player details
+        /// </summary>
+        public JsonResult GetTeamStanding(string teamStandingUrl)
+        {
+
+            var client = new RestClient("http://api.football-data.org/v1/competitions/" + teamStandingUrl.ToString() + "/leagueTable");
+            var request = new RestRequest(Method.GET);
+            request.RequestFormat = DataFormat.Json;
+            var r = client.Execute(request);
+            LeagueStanding model = JsonConvert.DeserializeObject<LeagueStanding>(r.Content);
+            Object response = model.standing;
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// This method is used to set a logged-in users 'teamUrl' to track their team
         /// </summary>
 
-        public ActionResult GetTeamData(string teamUrl)
+        public ActionResult GetTeamData(string teamUrl, string compId)
         {
             if (!Request.IsAuthenticated)
             {
@@ -120,6 +135,7 @@ namespace SoccerStats.Controllers
             {
                 ApplicationUser currentUser = db.Users.Find(User.Identity.GetUserId());
                 currentUser.teamUrl = teamUrl;
+                currentUser.compId = compId;
                 db.SaveChanges();
                 return View();
             } 
@@ -146,6 +162,7 @@ namespace SoccerStats.Controllers
                 teamRequest.RequestFormat = DataFormat.Json;
                 var response = teamClient.Execute(teamRequest);
                 Team teamModel = JsonConvert.DeserializeObject<Team>(response.Content);
+                teamModel.competitionId = currentUser.compId;
                 return View("TeamView", teamModel);
             }
 

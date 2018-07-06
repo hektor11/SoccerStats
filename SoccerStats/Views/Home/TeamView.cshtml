@@ -4,19 +4,49 @@
     ViewBag.Title = "TeamView";
 }
 
-
 <div ng-app="PlayerList" class="container">
-    <div class="row" ng-controller="PlayerDetails" ng-init="init('@Model._links.players.href')">
+
+    <div class="row" ng-controller="PlayerDetails" ng-init="init('@Model._links.players.href', '@Model.competitionId')">
+        
+        <div class="col-md-12">
+            <br/>
+            <table class="table" style="width:100%">
+                <tr>
+                    <th>POS</th>
+                    <th>PTS</th>
+                    <th>GP</th>
+                    <th>GD</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>D</th>
+                    <th>GF</th>
+                    <th>GA</th>
+                </tr>
+                <tr data-ng-repeat="team in teams | filter:{ teamName: '@Model.name'}">
+                    <td>{{ team.position }}</td>
+                    <td>{{ team.points }}</td>
+                    <td>{{ team.playedGames }}</td>
+                    <td>{{ team.goalDifference }}</td>
+                    <td>{{ team.wins }}</td>
+                    <td>{{ team.losses }}</td>
+                    <td>{{ team.draws }}</td>
+                    <td>{{ team.goals }}</td>
+                    <td>{{ team.goalsAgainst }}</td>
+                </tr>
+
+            </table>
+        </div>
+
         <div class="col-md-3">
             <br />
-            <img id="crestId" style="width: 100px" src="@Model.crestUrl" />
+            <img id="crest" style="width: 100px" src="@Model.crestUrl" />
             <h3 style="position: center">@Model.name</h3>
-            <button class="btn-primary" ng-click="add('@Model._links.self.href')">Add Team</button>
+            <button class="btn-primary" ng-click="add('@Model._links.self.href', '@Model.competitionId')">Add Team</button>
         </div>
         <div class="col-md-9">
             <div>
                 <div>
-
+                    <br />
                     <select class="selectpicker" data-style="btn-primary" ng-model="sortOrder">
                         <option value="name">Name</option>
                         <option value="jerseyNumber">Jersey Number</option>
@@ -52,25 +82,22 @@
 
 
 
+
 @section Scripts
 {
     <script data-require="angular.js@1.6.6" data-semver="1.6.6" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
     <script src="~/Scripts/Angular/PlayerDetailsController.js"></script>
 
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-            <text>$.get($('#crestId').prop('src'))
-            .done(function () {
-                // Keep src image if successful
+            $.get($('#crest').prop('src'))
+                .done(function () {
+                    // Keep src image if successful
                 }).fail(function () {
                     // Image doesn't exist - do something else.
-                    alert("yo");
-                $('#crestId').prop('src', 'http://res.publicdomainfiles.com/pdf_view/1/13488048039980.png');
-            });</text>
-            position++;
-
-        
-    });
+                    $('#crest').prop('src', 'http://res.publicdomainfiles.com/pdf_view/1/13488048039980.png');
+                });
+        });
     </script>
 }

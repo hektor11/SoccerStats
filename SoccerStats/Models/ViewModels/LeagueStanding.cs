@@ -11,6 +11,7 @@ namespace SoccerStats.Models.ViewModels
         public string leagueCaption { get; set; }
         public int matchday { get; set; }
         public List<Standing> standing { get; set; }
+        public int competitionId { get; set; }
 
 
         public class Self

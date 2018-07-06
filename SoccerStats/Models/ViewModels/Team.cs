@@ -13,6 +13,7 @@ namespace SoccerStats.Models.ViewModels
         public string shortName { get; set; }
         public object squadMarketValue { get; set; }
         public string crestUrl { get; set; }
+        public string competitionId { get; set; }
 
         public class Links
         {

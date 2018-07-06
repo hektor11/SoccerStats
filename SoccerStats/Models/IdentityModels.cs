@@ -18,6 +18,8 @@ namespace SoccerStats.Models
         }
 
         public string teamUrl { get; set; }
+
+        public string compId { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

@@ -202,6 +202,10 @@
     <Compile Include="Migrations\201807032250054_Initial.Designer.cs">
       <DependentUpon>201807032250054_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807062058298_adding compId to users model.cs" />
+    <Compile Include="Migrations\201807062058298_adding compId to users model.Designer.cs">
+      <DependentUpon>201807062058298_adding compId to users model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -223,6 +227,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\Angular\PlayerDetailsController.js" />
+    <Content Include="Scripts\Angular\TeamStandingController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -298,6 +303,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807032250054_Initial.resx">
       <DependentUpon>201807032250054_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807062058298_adding compId to users model.resx">
+      <DependentUpon>201807062058298_adding compId to users model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

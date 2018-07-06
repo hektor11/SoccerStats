@@ -32,7 +32,7 @@
         <tr>
             <td>@team.position</td>
             <td><img id="@imageId" style="height: 30px" src="@team.crestURI" /></td>
-            <td>@Html.ActionLink(@team.teamName, "TeamView", "Home", new { url = team._links.team.href }, null)</td>
+            <td>@Html.ActionLink(@team.teamName, "TeamView", "Home", new { url = team._links.team.href, id = Model.competitionId }, null)</td>
             <td>@team.points</td>
             <td>@team.playedGames</td>
             <td>@team.goalDifference</td>

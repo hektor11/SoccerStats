@@ -11,15 +11,24 @@
             $scope.error = "Could not fetch the user";
         };
 
-        $scope.init = function (teamurl) {
-            $scope.teamurl = teamurl;
-            $scope.sortOrder = "name";  
-            $http.get("/home/getplayerdata?teamurl=" + $scope.teamurl)
-                .then(onUserComplete, onError);
+        var onTeamComplete = function (response) {
+            $scope.teams = response.data;
         };
 
-        $scope.add = function (item) {
-            $http.get("/home/getteamdata?teamurl=" + item)
+        $scope.init = function (teamurl, teamstandingurl) {
+            $scope.teamurl = teamurl;
+            $scope.teamstandingurl = teamstandingurl;
+            $scope.sortOrder = "name";
+            $http.get("/home/getplayerdata?teamurl=" + $scope.teamurl)
+                .then(onUserComplete, onError);
+
+            $http.get("/home/getteamstanding?teamstandingurl=" + $scope.teamstandingurl)
+                .then(onTeamComplete, onError);
+
+        };
+
+        $scope.add = function (item, item2) {
+            $http.get("/home/getteamdata?teamurl=" + item +"&compId=" + item2)
                 .then(onUserComplete, onError);
         };
 
